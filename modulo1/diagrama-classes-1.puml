@@ -1,0 +1,50 @@
+@startuml
+' Diagrama de classes - versão simples (apenas atributos)
+class Livro {
+  - isbn: String
+  - titulo: String
+  - genero: String
+  - edicao: String
+  - anoPublicacao: int
+  - autores: List<Autor>
+}
+
+class Autor {
+  - nome: String
+  - nacionalidade: String
+  - obras: List<Livro>
+}
+
+class Usuario {
+  - id: String
+  - nome: String
+  - idade: int
+  - endereco: String
+  - telefone: String
+  - historicoEmprestimos: List<Emprestimo>
+}
+
+class Emprestimo {
+  - id: String
+  - dataRetirada: Date
+  - dataPrevistaDevolucao: Date
+  - dataDevolucao: Date?
+  - livro: Livro
+  - usuario: Usuario
+  - multa: Multa?
+}
+
+class Multa {
+  - id: String
+  - valor: double
+  - dataPagamento: Date?
+  - emprestimo: Emprestimo
+}
+
+' Relacionamentos
+Livro "1" -- "0..*" Emprestimo : "é emprestado em"
+Usuario "1" -- "0..*" Emprestimo : "realiza"
+Livro "1" -- "0..*" Autor : "é escrito por"   ' notation simplified
+Autor "1" -- "0..*" Livro : "escreve"
+Emprestimo "0..1" -- "0..1" Multa : "gera"
+@enduml

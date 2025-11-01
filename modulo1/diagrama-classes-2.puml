@@ -1,0 +1,77 @@
+@startuml name
+' Diagrama de classes - versão detalhada com métodos (estilo Java)
+class Livro {
+  - isbn: String
+  - titulo: String
+  - genero: String
+  - edicao: String
+  - anoPublicacao: int
+  - autores: List<Autor>
+  + isRestritoParaIdade(idade: int): boolean
+  + cadastrarExemplar(): void
+}
+
+class Autor {
+  - nome: String
+  - nacionalidade: String
+  - obras: List<Livro>
+  + adicionarObra(l: Livro): void
+}
+
+class Usuario {
+  - id: String
+  - nome: String
+  - idade: int
+  - endereco: String
+  - telefone: String
+  - historicoEmprestimos: List<Emprestimo>
+  + podeRetirarLivro(livro: Livro): boolean
+  + registrarEmprestimo(e: Emprestimo): void
+  + registrarDevolucao(e: Emprestimo): void
+  + possuiEmprestimosVencidos(): boolean
+}
+
+class Emprestimo {
+  - id: String
+  - dataRetirada: Date
+  - dataPrevistaDevolucao: Date
+  - dataDevolucao: Date?
+  - livro: Livro
+  - usuario: Usuario
+  - multa: Multa?
+  + registrarRetirada(): void
+  + registrarDevolucao(data: Date): void
+  + calcularMulta(): Multa?
+}
+
+class Multa {
+  - id: String
+  - valor: double
+  - dataPagamento: Date?
+  - emprestimo: Emprestimo
+  + calcularValor(atrasoDias: int): double
+  + registrarPagamento(data: Date): void
+}
+
+class Biblioteca {
+  - livros: List<Livro>
+  - usuarios: List<Usuario>
+  - emprestimos: List<Emprestimo>
+  + solicitarEmprestimo(usuarioId: String, isbn: String): Emprestimo | null
+  + verificarAptidao(usuario: Usuario, livro: Livro): boolean
+  + registrarEmprestimo(usuario: Usuario, livro: Livro): Emprestimo
+  + registrarDevolucao(emprestimoId: String, dataDevolucao: Date): void
+  + cadastrarLivro(l: Livro): void
+  + cadastrarAutor(a: Autor): void
+  + cadastrarUsuario(u: Usuario): void
+}
+
+'Relacionamentos
+Livro "1" -- "0..*" Emprestimo
+Usuario "1" -- "0..*" Emprestimo
+Emprestimo "0..1" -- "0..1" Multa
+Livro "0..*" -- "0..*" Autor
+Biblioteca "1" -- "*" Livro
+Biblioteca "1" -- "*" Usuario
+Biblioteca "1" -- "*" Emprestimo
+@enduml

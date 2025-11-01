@@ -1,0 +1,13 @@
+Escolha do paradigma: Programação Orientada a Objetos (POO)
+
+Para o sistema de gerenciamento de uma biblioteca, o paradigma de Programação Orientada a Objetos (POO) é o mais indicado. O domínio do problema — livros, autores, usuários, empréstimos, multas — naturalmente se mapeia para entidades com estado e comportamento, o que casa muito bem com classes e objetos.
+
+Estrutura e interação entre entidades: Cada entidade do domínio (Livro, Autor, Usuário, Empréstimo) possui atributos próprios (por exemplo: Livro → título, autor, gênero, ISBN; Usuário → nome, idade, histórico) e responsabilidades (por exemplo: Emprestimo → registrar data retirada/devolução). Com POO podemos modelar essas responsabilidades como métodos das classes — encapsulando estado e regras (ex.: verificar restrição etária do livro no momento de empréstimo).
+
+Reuso: POO facilita reuso via composição e herança quando necessário (por exemplo, diferentes tipos de usuário — aluno, professor — podem estender uma classe base Usuario), e promove encapsulamento de lógica de negócio em métodos coesos, o que facilita manutenção.
+
+Evolução do sistema: Para requisitos futuros (ex.: adicionar reservas, categorias especiais de livro, integrações com notificações por e-mail), POO permite estender classes, implementar interfaces e seguir princípios SOLID para manter o sistema modular e testável.
+
+Eficiência no cenário apresentado: Embora paradigmas funcionais e estruturados também possam modelar o problema, POO reduz a complexidade ao permitir representar diretamente os conceitos do domínio como objetos que interagem. Isso diminui a probabilidade de duplicação de lógica e facilita a leitura e extensão do código por novos desenvolvedores.
+
+Observação: Em muitos sistemas reais aplica-se uma combinação prudente de paradigmas (POO com práticas funcionais internas), mas o paradigma principal e organizador para esse domínio é a POO.

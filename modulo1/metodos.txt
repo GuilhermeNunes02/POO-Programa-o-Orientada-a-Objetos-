@@ -1,0 +1,87 @@
+Classe Livro
+
+public boolean isRestritoParaIdade(int idade)
+Retorna true se o livro possuir restrição etária e a idade for menor que o mínimo.
+
+public void cadastrarExemplar()
+Incrementa a contagem de exemplares disponíveis (se modelar cópias).
+
+Classe Autor
+
+public void adicionarObra(Livro l)
+Associa livro ao autor.
+
+Classe Usuario
+
+public boolean podeRetirarLivro(Livro livro)
+Verifica regras: histórico (sem multas vencidas), idade para o gênero do livro, limite de empréstimos simultâneos.
+
+public void registrarEmprestimo(Emprestimo e)
+Adiciona o empréstimo ao histórico e atualiza estado do usuário.
+
+public void registrarDevolucao(Emprestimo e)
+Atualiza histórico; se houver multa, liga-la ao usuário.
+
+public boolean possuiEmprestimosVencidos()
+Retorna se há emprestimos com dataPrevistaDevolucao < hoje e sem dataDevolucao.
+
+Classe Emprestimo
+
+public void registrarRetirada()
+Define dataRetirada = hoje e dataPrevistaDevolucao = hoje + periodo.
+
+public void registrarDevolucao(LocalDate data)
+Define dataDevolucao = data; se atrasado, cria Multa e associa.
+
+public Optional<Multa> calcularMulta()
+Calcula se houver atraso e valor.
+
+Classe Multa
+
+public double calcularValor(int atrasoDias)
+Retorna valor conforme política (ex.: valor = atrasoDias * taxaDiaria).
+
+public void registrarPagamento(LocalDate data)
+Marca dataPagamento e atualiza status.
+
+Classe Biblioteca (ou SistemaBiblioteca)
+
+Métodos que implementam os fluxos:
+
+public Emprestimo solicitarEmprestimo(String usuarioId, String isbn)
+
+Busca Usuario e Livro (um exemplar disponível).
+
+Chama verificarAptidao(usuario, livro).
+
+Se apto: chama registrarEmprestimo(usuario, livro) retorna Emprestimo.
+
+Se não apto: retorna null ou lança exceção EmprestimoRecusadoException.
+
+public boolean verificarAptidao(Usuario usuario, Livro livro)
+
+Verifica nome, histórico de empréstimos (sem multas vencidas), idade (restrição de gênero).
+
+public Emprestimo registrarEmprestimo(Usuario usuario, Livro livro)
+
+Cria Emprestimo, registra dataRetirada e dataPrevistaDevolucao, associa livro e usuário, decrementa número de exemplares disponíveis.
+
+public void registrarDevolucao(String emprestimoId, LocalDate dataDevolucao)
+
+Obtém Emprestimo, chama registrarDevolucao(dataDevolucao) em Emprestimo.
+
+Atualiza status do livro como disponível.
+
+Se houver Multa, cria-a e adiciona ao sistema para pagamento.
+
+public void cadastrarLivro(Livro livro)
+
+Adiciona livro ao repositório.
+
+public void cadastrarAutor(Autor autor)
+
+Cadastra autor e associa obras.
+
+public void cadastrarUsuario(Usuario usuario)
+
+Cadastra usuário e inicializa histórico de empréstimos.
